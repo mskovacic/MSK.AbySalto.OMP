@@ -1,6 +1,7 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.8.0.0
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 18
+VisualStudioVersion = 18.2.11415.280 d18.0
 MinimumVisualStudioVersion = 17.8.0.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSK.AbySalto.OMP.AppHost", "MSK.AbySalto.OMP.AppHost\MSK.AbySalto.OMP.AppHost.csproj", "{65475A4E-0989-4E7F-8836-5796280A670F}"
 EndProject
@@ -8,7 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MSK.AbySalto.OMP.Server", "
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "frontend", "frontend\frontend.esproj", "{ACB37210-7B53-4176-95C2-805D38A56926}"
 EndProject
-
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSK.AbySalto.OMP.Infrastructure", "MSK.AbySalto.OMP.Infrastructure\MSK.AbySalto.OMP.Infrastructure.csproj", "{1193055E-4999-44C5-B2E9-C930102750C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MSK.AbySalto.OMP.Core", "MSK.AbySalto.OMP.Core\MSK.AbySalto.OMP.Core.csproj", "{B9736046-F237-4E33-80C5-5726AA7D1F6B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,7 +31,14 @@ Global
 		{ACB37210-7B53-4176-95C2-805D38A56926}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACB37210-7B53-4176-95C2-805D38A56926}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACB37210-7B53-4176-95C2-805D38A56926}.Release|Any CPU.Build.0 = Release|Any CPU
-
+		{1193055E-4999-44C5-B2E9-C930102750C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1193055E-4999-44C5-B2E9-C930102750C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1193055E-4999-44C5-B2E9-C930102750C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1193055E-4999-44C5-B2E9-C930102750C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B9736046-F237-4E33-80C5-5726AA7D1F6B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B9736046-F237-4E33-80C5-5726AA7D1F6B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B9736046-F237-4E33-80C5-5726AA7D1F6B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B9736046-F237-4E33-80C5-5726AA7D1F6B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -16,4 +16,13 @@
     <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.14.0" />
     <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.14.0" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\MSK.AbySalto.OMP.Core\MSK.AbySalto.OMP.Core.csproj" />
+    <ProjectReference Include="..\MSK.AbySalto.OMP.Infrastructure\MSK.AbySalto.OMP.Infrastructure.csproj" />
+  </ItemGroup>
 </Project>

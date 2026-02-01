@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using MSK.AbySalto.OMP.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire client integrations.
 builder.AddServiceDefaults();
+
+var a = builder.Configuration.GetConnectionString("webshopdb");
+builder.AddNpgsqlDbContext<OMPContext>(connectionName: "webshopdb");
+
+builder.Services.AddControllers();
 
 // Add services to the container.
 builder.Services.AddProblemDetails();
@@ -23,8 +31,10 @@ if (app.Environment.IsDevelopment())
 string[] summaries = ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"];
 
 var api = app.MapGroup("/api");
-api.MapGet("weatherforecast", () =>
+api.MapControllers();
+api.MapGet("weatherforecast", (OMPContext c) =>
 {
+    c.Database.CanConnect();
     var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (

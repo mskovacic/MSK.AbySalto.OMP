@@ -1,12 +1,13 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var db = builder.AddPostgres("database");
+var postgres = builder.AddPostgres("postgres");
+var webshopdb = postgres.AddDatabase("webshopdb");
 
 var server = builder.AddProject<Projects.MSK_AbySalto_OMP_Server>("server")
     .WithHttpHealthCheck("/health")
     .WithExternalHttpEndpoints()
-    .WithReference(db)
-    .WaitFor(db);
+    .WithReference(webshopdb)
+    .WaitFor(webshopdb);
 
 var webfrontend = builder.AddViteApp("webfrontend", "../frontend")
     .WithReference(server)
