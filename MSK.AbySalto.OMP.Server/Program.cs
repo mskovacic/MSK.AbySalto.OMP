@@ -34,7 +34,7 @@ var api = app.MapGroup("/api");
 api.MapControllers();
 api.MapGet("weatherforecast", (OMPContext c) =>
 {
-    c.Database.CanConnect();
+    var a = c.Products.Count(); // to avoid warning
     var forecast = Enumerable.Range(1, 5).Select(index =>
         new WeatherForecast
         (
@@ -50,6 +50,10 @@ api.MapGet("weatherforecast", (OMPContext c) =>
 app.MapDefaultEndpoints();
 
 app.UseFileServer();
+
+using var scope = app.Services.CreateScope();
+var context = scope.ServiceProvider.GetRequiredService<OMPContext>();
+await DatabaseHelper.InitializeAsync(context);
 
 app.Run();
 
