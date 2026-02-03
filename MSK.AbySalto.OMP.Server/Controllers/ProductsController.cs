@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MSK.AbySalto.OMP.Core.Services;
 
 namespace MSK.AbySalto.OMP.Server.Controllers
 {
     [ApiController]
-    [Route("products")]
-    public class ProductsController : Controller
+    public class ProductsController(ProductsService service) : Controller
     {
-        [HttpGet("/")]
-        public IActionResult Get()
+        [HttpGet("products")]
+        public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
         {
-            return View();
+            service.GetProductsAsync(cancellationToken);
+            return Ok("ok");
         }
     }
 }

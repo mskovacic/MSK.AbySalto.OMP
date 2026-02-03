@@ -3,7 +3,8 @@
 namespace MSK.AbySalto.OMP.Server.Controllers
 {
     [ApiController]
-    public class BasketController : Controller
+    public class BasketController(BasketService service) : Controller
     {
+
     }
 }
