@@ -4,36 +4,71 @@ using MSK.AbySalto.OMP.Core.Services;
 namespace MSK.AbySalto.OMP.Server.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class BasketController(BasketService service) : Controller
     {
-        public async Task<IActionResult> GetBasketAsync(CancellationToken cancellationToken)
+        [HttpPost]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> CreateBasketAsync(CancellationToken cancellationToken)
         {
-            // Implementation for getting a product by its ID would go here
-            return Ok("ok");
+            var basket = await service.CreateAsync("", cancellationToken);
+            return Created((string?)null, basket);
         }
 
-        public async Task<IActionResult> DeleteBasketAsync(CancellationToken cancellationToken)
+        [HttpGet()]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> GetBasketAsync(long basketId, CancellationToken cancellationToken)
         {
-            // Implementation for deleting a product by its ID would go here
-            return Ok("ok");
+            var basket = service.GetBasketAsync("", basketId, cancellationToken);
+            return Ok(basket);
         }
 
-        public async Task<IActionResult> AddItemToBasketAsync(CancellationToken cancellationToken)
+        [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> DeleteBasketAsync(long basketId, CancellationToken cancellationToken)
         {
-            // Implementation for adding an item to the basket would go here
-            return Ok("ok");
+            var result = await service.DeleteAsync("", basketId);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
         }
 
-        public async Task<IActionResult> RemoveItemFromBasketAsync(CancellationToken cancellationToken)
+        [HttpPost("{basketId}/item")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> AddItemToBasketAsync(long basketId, int quantity, long productId, CancellationToken cancellationToken)
         {
-            // Implementation for removing an item from the basket would go here
-            return Ok("ok");
+            var basketItem = await service.AddBasketItemAsync("", basketId, quantity, productId, cancellationToken);
+            return Ok(basketItem);
         }
 
-        public async Task<IActionResult> UpdateItemQuantityAsync(CancellationToken cancellationToken)
+        [HttpDelete("{basketId}/item")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> RemoveItemFromBasketAsync(long basketId, long baskeItemId, CancellationToken cancellationToken)
         {
-            // Implementation for updating the quantity of an item in the basket would go here
-            return Ok("ok");
+            var result = await service.RemoveBasketItemAsync("", basketId, baskeItemId, cancellationToken);
+            if (result)
+            {
+                return Ok();
+            }
+
+            return BadRequest();
+        }
+
+        [HttpPut("{basketId}/item")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> UpdateItemQuantityAsync(long basketId, long baskeItemId, int quantity, CancellationToken cancellationToken)
+        {
+            var basketItem = await service.UpdateBasketQuantityAsync("", basketId, baskeItemId, quantity, cancellationToken);
+            return Ok(basketItem);
         }
     }
 }

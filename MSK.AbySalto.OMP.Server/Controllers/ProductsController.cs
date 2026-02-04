@@ -4,9 +4,12 @@ using MSK.AbySalto.OMP.Core.Services;
 namespace MSK.AbySalto.OMP.Server.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class ProductsController(ProductsService service) : Controller
     {
-        [HttpGet("products")]
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
         {
             service.GetProductsAsync(cancellationToken);
