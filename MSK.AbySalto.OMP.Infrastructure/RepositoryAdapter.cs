@@ -1,4 +1,5 @@
-﻿using MSK.AbySalto.OMP.Core.Entities;
+﻿using Microsoft.EntityFrameworkCore;
+using MSK.AbySalto.OMP.Core.Entities;
 using MSK.AbySalto.OMP.Core.Interfaces;
 
 namespace MSK.AbySalto.OMP.Infrastructure
@@ -27,6 +28,16 @@ namespace MSK.AbySalto.OMP.Infrastructure
             {
                 await context.SaveChangesAsync(cancellationToken);
             }
+        }
+
+        public async Task UpdateAsync<T>(T entity, bool save = true, CancellationToken cancellationToken = default) where T : class
+        {
+            context.Attach(entity);
+            if (save)
+            {
+                await context.SaveChangesAsync(cancellationToken);
+            }
+
         }
     }
 }

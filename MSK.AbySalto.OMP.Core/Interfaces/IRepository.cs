@@ -6,11 +6,13 @@ namespace MSK.AbySalto.OMP.Core.Interfaces
     {
         IQueryable<Product> Products { get; }
 
-        IAsyncQueryable<Basket> Baskets { get; }
+        IQueryable<Basket> Baskets { get; }
 
         IQueryable<BasketItem> BasketItems { get; }
 
         Task AddAsync<T>(T entity, bool save = true, CancellationToken cancellationToken = default) where T : class;
+
+        Task UpdateAsync<T>(T entity, bool save = true, CancellationToken cancellationToken = default) where T : class;
 
         Task RemoveAsync<T>(T entity, bool save = true, CancellationToken cancellationToken = default) where T : class;
     }
