@@ -4,7 +4,7 @@ using MSK.AbySalto.OMP.Core.Services;
 namespace MSK.AbySalto.OMP.Server.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class BasketController(BasketService service) : Controller
     {
         [HttpPost]
@@ -21,7 +21,7 @@ namespace MSK.AbySalto.OMP.Server.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetBasketAsync(long basketId, CancellationToken cancellationToken)
         {
-            var basket = service.GetBasketAsync("", basketId, cancellationToken);
+            var basket = await service.GetBasketAsync("", basketId, cancellationToken);
             return Ok(basket);
         }
 

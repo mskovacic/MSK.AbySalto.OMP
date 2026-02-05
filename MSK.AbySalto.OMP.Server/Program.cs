@@ -1,4 +1,6 @@
 using Microsoft.EntityFrameworkCore;
+using MSK.AbySalto.OMP.Core.Interfaces;
+using MSK.AbySalto.OMP.Core.Services;
 using MSK.AbySalto.OMP.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -17,6 +19,10 @@ builder.Services.AddProblemDetails();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddScoped<IRepository, RepositoryAdapter>();
+builder.Services.AddScoped<ProductsService, ProductsService>();
+builder.Services.AddScoped<BasketService, BasketService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,8 +36,8 @@ if (app.Environment.IsDevelopment())
 
 string[] summaries = ["Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"];
 
+app.MapControllers();
 var api = app.MapGroup("/api");
-api.MapControllers();
 api.MapGet("weatherforecast", (OMPContext c) =>
 {
     var a = c.Products.Count(); // to avoid warning

@@ -1,4 +1,5 @@
-﻿using MSK.AbySalto.OMP.Core.DTO;
+﻿using Microsoft.EntityFrameworkCore;
+using MSK.AbySalto.OMP.Core.DTO;
 using MSK.AbySalto.OMP.Core.Interfaces;
 
 namespace MSK.AbySalto.OMP.Core.Services
@@ -7,7 +8,7 @@ namespace MSK.AbySalto.OMP.Core.Services
     {
         public IAsyncEnumerable<ProductDTO> GetProductsAsync(CancellationToken cancellationToken = default)
         {
-            return repository.Products.Select(x =>
+            return repository.Products.AsNoTracking().Select(x =>
                 new ProductDTO
                 {
                     Id = x.Id,

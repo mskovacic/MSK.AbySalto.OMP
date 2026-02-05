@@ -10,10 +10,10 @@ namespace MSK.AbySalto.OMP.Core.Interfaces
 
         IQueryable<BasketItem> BasketItems { get; }
 
-        Task AddAsync<T>(T entity, bool save = true, CancellationToken cancellationToken = default) where T : class;
+        Task AddAsync<T>(T entity, bool save = true, CancellationToken cancellationToken = default) where T : BaseEntity;
 
-        Task UpdateAsync<T>(T entity, bool save = true, CancellationToken cancellationToken = default) where T : class;
+        Task UpdateAsync<T>(T entity, bool save = true, CancellationToken cancellationToken = default) where T : BaseEntity;
 
-        Task RemoveAsync<T>(T entity, bool save = true, CancellationToken cancellationToken = default) where T : class;
+        Task RemoveAsync<T>(T entity, bool save = true, CancellationToken cancellationToken = default) where T : BaseEntity;
     }
 }

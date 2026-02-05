@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MSK.AbySalto.OMP.Core.DTO;
+using MSK.AbySalto.OMP.Core.Entities;
 using MSK.AbySalto.OMP.Core.Interfaces;
 
 namespace MSK.AbySalto.OMP.Core.Services
@@ -8,13 +9,13 @@ namespace MSK.AbySalto.OMP.Core.Services
     {
         public async Task<BasketDTO?> GetBasketAsync(string userId, long basketId, CancellationToken cancellationToken = default)
         {
-            var basket = await repository.Baskets.AsNoTracking().FirstOrDefaultAsync(b => b.Id == basketId && b.BuyerId == userId, cancellationToken);
+            var basket = await repository.Baskets.Include("Items.Product").AsNoTracking().FirstOrDefaultAsync(b => b.Id == basketId && b.BuyerId == userId, cancellationToken);
             if (basket is null)
             {
                 return null;
             }
 
-            return new BasketDTO
+            var dto = new BasketDTO
             {
                 Id = basket.Id,
                 BuyerId = basket.BuyerId,
@@ -35,6 +36,7 @@ namespace MSK.AbySalto.OMP.Core.Services
                         UnitDiscount = item.UnitDiscount
                     }).ToArray()
             };
+            return dto;
         }
 
         public async Task<bool> DeleteAsync(string userId, long basketId)
@@ -78,9 +80,18 @@ namespace MSK.AbySalto.OMP.Core.Services
                 throw new ArgumentException("Invalid productId", nameof(productId));
             }
 
+            var basketItem = new BasketItem
+            {
+                BasketId = basket.Id,
+                ProductId = product.Id,
+                Quantity = quantity,
+                UnitDiscount = 0
+            };
+            await repository.AddAsync(basketItem, cancellationToken: cancellationToken);
+
             return new BasketItemDTO
             {
-                Id = basket.Id,
+                Id = basketItem.Id,
                 Product = new ProductDTO
                 {
                     Id = product.Id,

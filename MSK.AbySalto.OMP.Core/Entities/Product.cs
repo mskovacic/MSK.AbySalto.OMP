@@ -1,6 +1,6 @@
 ﻿namespace MSK.AbySalto.OMP.Core.Entities
 {
-    public class Product
+    public class Product : BaseEntity
     {
         public long Id { get; set; }
         public required string Name { get; set; }

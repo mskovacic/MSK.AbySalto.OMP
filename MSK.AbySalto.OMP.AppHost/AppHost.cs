@@ -2,7 +2,7 @@ using Scalar.Aspire;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
-var postgres = builder.AddPostgres("postgres");
+var postgres = builder.AddPostgres("postgres").WithBindMount(builder.Environment.ContentRootPath, "/var/lib/postgresql/data2");
 var webshopdb = postgres.AddDatabase("webshopdb");
 
 var server = builder.AddProject<Projects.MSK_AbySalto_OMP_Server>("server")
