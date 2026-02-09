@@ -28,7 +28,7 @@ function Items() {
     }
 
     const createBasketId = async () => {
-        const basket = await client.api.basket.post()
+        /*const basket = */await client.api.basket.post()
         setBasketId('2')
         localStorage.setItem("basketId", "2")
     }
@@ -36,6 +36,12 @@ function Items() {
     useEffect(() => {
         fetchItems()
     }, [])
+
+    useEffect(() => {
+        if (!basketId) {
+            createBasketId()
+        }
+    }, [basketId])
 
     return (
         <section>
@@ -54,45 +60,18 @@ function Items() {
                             <div>
                                 <button
                                     className="refresh-button"
-                                    onClick={fetchWeatherForecast}
+                                    onClick={addItemToBasket}
                                     type="button"
                                 >
-                                    <svg
-                                        className={`refresh-icon ${loading ? 'spinning' : ''}`}
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        aria-hidden="true"
-                                        focusable="false"
-                                    >
-                                        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
-                                    </svg>
-                                    <span>{loading ? 'Loading...' : 'Refresh'}</span>
+                                   
+                                    <span>Dodaj u košaricu</span>
                                 </button>
                                 <button
                                     className="refresh-button"
-                                    onClick={fetchWeatherForecast}
-                                    disabled={loading}
-                                    aria-label={loading ? 'Loading weather forecast' : 'Refresh weather forecast'}
                                     type="button"
                                 >
-                                    <svg
-                                        className={`refresh-icon ${loading ? 'spinning' : ''}`}
-                                        width="20"
-                                        height="20"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        aria-hidden="true"
-                                        focusable="false"
-                                    >
-                                        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
-                                    </svg>
-                                    <span>{loading ? 'Loading...' : 'Refresh'}</span>
+                                    
+                                    <span>Detalji proizvoda</span>
                                 </button>
                             </div>
                         </div>

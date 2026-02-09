@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using MSK.AbySalto.OMP.Core.DTO;
 using MSK.AbySalto.OMP.Core.Services;
 
 namespace MSK.AbySalto.OMP.Server.Controllers
@@ -8,7 +9,7 @@ namespace MSK.AbySalto.OMP.Server.Controllers
     public class BasketController(BasketService service) : Controller
     {
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(BasketDTO), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateBasketAsync(CancellationToken cancellationToken)
         {
@@ -17,7 +18,7 @@ namespace MSK.AbySalto.OMP.Server.Controllers
         }
 
         [HttpGet()]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(BasketDTO), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetBasketAsync(long basketId, CancellationToken cancellationToken)
         {
@@ -49,7 +50,7 @@ namespace MSK.AbySalto.OMP.Server.Controllers
         }
 
         [HttpDelete("{basketId}/item")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(bool), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> RemoveItemFromBasketAsync(long basketId, long baskeItemId, CancellationToken cancellationToken)
         {
