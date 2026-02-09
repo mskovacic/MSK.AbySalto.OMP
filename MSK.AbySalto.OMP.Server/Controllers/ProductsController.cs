@@ -10,7 +10,7 @@ namespace MSK.AbySalto.OMP.Server.Controllers
     {
         [HttpGet]
         [ProducesResponseType(typeof(ProductDTO[]), StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAsync(CancellationToken cancellationToken)
         {
             var products = service.GetProductsAsync(cancellationToken);

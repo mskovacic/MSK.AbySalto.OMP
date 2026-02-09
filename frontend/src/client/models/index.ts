@@ -16,6 +16,15 @@ export function createProblemDetailsFromDiscriminatorValue(parseNode: ParseNode 
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {ProductDTO}
+ */
+// @ts-ignore
+export function createProductDTOFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoProductDTO;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
  * @returns {WeatherForecast}
  */
 // @ts-ignore
@@ -35,6 +44,21 @@ export function deserializeIntoProblemDetails(problemDetails: Partial<ProblemDet
         "status": n => { problemDetails.status = n.getObjectValue<UntypedNode>(createUntypedNodeFromDiscriminatorValue); },
         "title": n => { problemDetails.title = n.getStringValue(); },
         "type": n => { problemDetails.type = n.getStringValue(); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param ProductDTO The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoProductDTO(productDTO: Partial<ProductDTO> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "description": n => { productDTO.description = n.getStringValue(); },
+        "id": n => { productDTO.id = n.getObjectValue<UntypedNode>(createUntypedNodeFromDiscriminatorValue); },
+        "image": n => { productDTO.image = n.getStringValue(); },
+        "name": n => { productDTO.name = n.getStringValue(); },
+        "price": n => { productDTO.price = n.getObjectValue<UntypedNode>(createUntypedNodeFromDiscriminatorValue); },
     }
 }
 /**
@@ -73,6 +97,28 @@ export interface ProblemDetails extends AdditionalDataHolder, ApiError, Parsable
      */
     type?: string | null;
 }
+export interface ProductDTO extends AdditionalDataHolder, Parsable {
+    /**
+     * The description property
+     */
+    description?: string | null;
+    /**
+     * The id property
+     */
+    id?: UntypedNode | null;
+    /**
+     * The image property
+     */
+    image?: string | null;
+    /**
+     * The name property
+     */
+    name?: string | null;
+    /**
+     * The price property
+     */
+    price?: UntypedNode | null;
+}
 /**
  * Serializes information the current object
  * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
@@ -88,6 +134,22 @@ export function serializeProblemDetails(writer: SerializationWriter, problemDeta
     writer.writeStringValue("title", problemDetails.title);
     writer.writeStringValue("type", problemDetails.type);
     writer.writeAdditionalData(problemDetails.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param ProductDTO The instance to serialize from.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeProductDTO(writer: SerializationWriter, productDTO: Partial<ProductDTO> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!productDTO || isSerializingDerivedType) { return; }
+    writer.writeStringValue("description", productDTO.description);
+    writer.writeObjectValue("id", productDTO.id);
+    writer.writeStringValue("image", productDTO.image);
+    writer.writeStringValue("name", productDTO.name);
+    writer.writeObjectValue("price", productDTO.price);
+    writer.writeAdditionalData(productDTO.additionalData);
 }
 /**
  * Serializes information the current object
