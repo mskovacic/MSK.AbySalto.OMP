@@ -1,6 +1,6 @@
 import {  useEffect, useState } from 'react'
 import { createPostsClient } from './client/postsClient';
-import { AnonymousAuthenticationProvider } from "@microsoft/kiota-abstractions";
+import { AnonymousAuthenticationProvider, type RequestConfiguration } from "@microsoft/kiota-abstractions";
 import { FetchRequestAdapter } from "@microsoft/kiota-http-fetchlibrary";
 import type { ProductDTO } from './client/models';
 import type { Item_EscapedRequestBuilderPostQueryParameters } from './client/api/basket/item/item_Escaped';
