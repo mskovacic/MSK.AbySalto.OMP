@@ -43,7 +43,7 @@ namespace MSK.AbySalto.OMP.Server.Controllers
         [HttpPost("{basketId}/item")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> AddItemToBasketAsync(long basketId, int quantity, long productId, CancellationToken cancellationToken)
+        public async Task<IActionResult> AddItemToBasketAsync(long basketId, [FromQuery] int quantity, [FromQuery] long productId, CancellationToken cancellationToken)
         {
             var basketItem = await service.AddBasketItemAsync("", basketId, quantity, productId, cancellationToken);
             return Ok(basketItem);

@@ -68,6 +68,11 @@ namespace MSK.AbySalto.OMP.Core.Services
 
         public async Task<BasketItemDTO> AddBasketItemAsync(string userId, long basketId, int quantity, long productId, CancellationToken cancellationToken = default)
         {
+            if (quantity <= 0)
+            {
+                throw new ArgumentException("Invalid quantity", nameof(quantity));
+            }
+
             var basket = await repository.Baskets.AsNoTracking().FirstOrDefaultAsync(b => b.Id == basketId && b.BuyerId == userId, cancellationToken);
             if (basket is null)
             {
@@ -80,14 +85,37 @@ namespace MSK.AbySalto.OMP.Core.Services
                 throw new ArgumentException("Invalid productId", nameof(productId));
             }
 
-            var basketItem = new BasketItem
+            var basketItem = await repository.BasketItems.FirstOrDefaultAsync(p => p.BasketId == basketId && p.ProductId == productId);
+            if (basketItem == null)
             {
-                BasketId = basket.Id,
-                ProductId = product.Id,
-                Quantity = quantity,
-                UnitDiscount = 0
-            };
-            await repository.AddAsync(basketItem, cancellationToken: cancellationToken);
+                var newBasketItem = new BasketItem
+                {
+                    BasketId = basket.Id,
+                    ProductId = product.Id,
+                    Quantity = quantity,
+                    UnitDiscount = 0
+                };
+                await repository.AddAsync(newBasketItem, cancellationToken: cancellationToken);
+
+                return new BasketItemDTO
+                {
+                    Id = newBasketItem.Id,
+                    Product = new ProductDTO
+                    {
+                        Id = product.Id,
+                        Name = product.Name,
+                        Description = product.Description,
+                        Price = product.Price,
+                        Image = product.Image
+                    },
+                    Quantity = newBasketItem.Quantity,
+                    UnitDiscount = 0,
+                    TotalPrice = newBasketItem.Quantity * product.Price
+                };
+            }
+
+            basketItem.Quantity += quantity;
+            await repository.UpdateAsync(basketItem, cancellationToken: cancellationToken);
 
             return new BasketItemDTO
             {
@@ -100,9 +128,9 @@ namespace MSK.AbySalto.OMP.Core.Services
                     Price = product.Price,
                     Image = product.Image
                 },
-                Quantity = quantity,
+                Quantity = basketItem.Quantity,
                 UnitDiscount = 0,
-                TotalPrice = quantity * product.Price
+                TotalPrice = basketItem.Quantity * product.Price
             };
         }
 

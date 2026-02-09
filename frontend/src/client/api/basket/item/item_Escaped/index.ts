@@ -12,10 +12,10 @@ import { type BaseRequestBuilder, type Parsable, type ParsableFactory, type Requ
 export interface Item_EscapedRequestBuilder extends BaseRequestBuilder<Item_EscapedRequestBuilder> {
     /**
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
-     * @returns {Promise<ArrayBuffer>}
+     * @returns {Promise<boolean>}
      * @throws {ProblemDetails} error when the service returns a 400 status code
      */
-     delete(requestConfiguration?: RequestConfiguration<Item_EscapedRequestBuilderDeleteQueryParameters> | undefined) : Promise<ArrayBuffer | undefined>;
+     delete(requestConfiguration?: RequestConfiguration<Item_EscapedRequestBuilderDeleteQueryParameters> | undefined) : Promise<boolean | undefined>;
     /**
      * @param requestConfiguration Configuration for the request such as headers, query parameters, and middleware options.
      * @returns {Promise<ArrayBuffer>}
@@ -65,12 +65,12 @@ export const Item_EscapedRequestBuilderUriTemplate = "{+baseurl}/api/Basket/{bas
 export const Item_EscapedRequestBuilderRequestsMetadata: RequestsMetadata = {
     delete: {
         uriTemplate: Item_EscapedRequestBuilderUriTemplate,
-        responseBodyContentType: "application/json, text/plain;q=0.9",
+        responseBodyContentType: "text/plain;q=0.9",
         errorMappings: {
             400: createProblemDetailsFromDiscriminatorValue as ParsableFactory<Parsable>,
         },
         adapterMethodName: "sendPrimitive",
-        responseBodyFactory:  "ArrayBuffer",
+        responseBodyFactory:  "boolean",
     },
     post: {
         uriTemplate: Item_EscapedRequestBuilderUriTemplate,

@@ -4,6 +4,60 @@
 // @ts-ignore
 import { createUntypedNodeFromDiscriminatorValue, type AdditionalDataHolder, type ApiError, type DateOnly, type Parsable, type ParseNode, type SerializationWriter, type UntypedNode } from '@microsoft/kiota-abstractions';
 
+export interface BasketDTO extends AdditionalDataHolder, Parsable {
+    /**
+     * The buyerId property
+     */
+    buyerId?: string | null;
+    /**
+     * The id property
+     */
+    id?: UntypedNode | null;
+    /**
+     * The items property
+     */
+    items?: BasketItemDTO[] | null;
+}
+export interface BasketItemDTO extends AdditionalDataHolder, Parsable {
+    /**
+     * The id property
+     */
+    id?: UntypedNode | null;
+    /**
+     * The product property
+     */
+    product?: ProductDTO | null;
+    /**
+     * The quantity property
+     */
+    quantity?: UntypedNode | null;
+    /**
+     * The totalPrice property
+     */
+    totalPrice?: UntypedNode | null;
+    /**
+     * The unitDiscount property
+     */
+    unitDiscount?: UntypedNode | null;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {BasketDTO}
+ */
+// @ts-ignore
+export function createBasketDTOFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoBasketDTO;
+}
+/**
+ * Creates a new instance of the appropriate class based on discriminator value
+ * @param parseNode The parse node to use to read the discriminator value and create the object
+ * @returns {BasketItemDTO}
+ */
+// @ts-ignore
+export function createBasketItemDTOFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
+    return deserializeIntoBasketItemDTO;
+}
 /**
  * Creates a new instance of the appropriate class based on discriminator value
  * @param parseNode The parse node to use to read the discriminator value and create the object
@@ -30,6 +84,34 @@ export function createProductDTOFromDiscriminatorValue(parseNode: ParseNode | un
 // @ts-ignore
 export function createWeatherForecastFromDiscriminatorValue(parseNode: ParseNode | undefined) : ((instance?: Parsable) => Record<string, (node: ParseNode) => void>) {
     return deserializeIntoWeatherForecast;
+}
+/**
+ * The deserialization information for the current model
+ * @param BasketDTO The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoBasketDTO(basketDTO: Partial<BasketDTO> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "buyerId": n => { basketDTO.buyerId = n.getStringValue(); },
+        "id": n => { basketDTO.id = n.getObjectValue<UntypedNode>(createUntypedNodeFromDiscriminatorValue); },
+        "items": n => { basketDTO.items = n.getCollectionOfObjectValues<BasketItemDTO>(createBasketItemDTOFromDiscriminatorValue); },
+    }
+}
+/**
+ * The deserialization information for the current model
+ * @param BasketItemDTO The instance to deserialize into.
+ * @returns {Record<string, (node: ParseNode) => void>}
+ */
+// @ts-ignore
+export function deserializeIntoBasketItemDTO(basketItemDTO: Partial<BasketItemDTO> | undefined = {}) : Record<string, (node: ParseNode) => void> {
+    return {
+        "id": n => { basketItemDTO.id = n.getObjectValue<UntypedNode>(createUntypedNodeFromDiscriminatorValue); },
+        "product": n => { basketItemDTO.product = n.getObjectValue<ProductDTO>(createProductDTOFromDiscriminatorValue); },
+        "quantity": n => { basketItemDTO.quantity = n.getObjectValue<UntypedNode>(createUntypedNodeFromDiscriminatorValue); },
+        "totalPrice": n => { basketItemDTO.totalPrice = n.getObjectValue<UntypedNode>(createUntypedNodeFromDiscriminatorValue); },
+        "unitDiscount": n => { basketItemDTO.unitDiscount = n.getObjectValue<UntypedNode>(createUntypedNodeFromDiscriminatorValue); },
+    }
 }
 /**
  * The deserialization information for the current model
@@ -118,6 +200,36 @@ export interface ProductDTO extends AdditionalDataHolder, Parsable {
      * The price property
      */
     price?: UntypedNode | null;
+}
+/**
+ * Serializes information the current object
+ * @param BasketDTO The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeBasketDTO(writer: SerializationWriter, basketDTO: Partial<BasketDTO> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!basketDTO || isSerializingDerivedType) { return; }
+    writer.writeStringValue("buyerId", basketDTO.buyerId);
+    writer.writeObjectValue("id", basketDTO.id);
+    writer.writeCollectionOfObjectValues<BasketItemDTO>("items", basketDTO.items, serializeBasketItemDTO);
+    writer.writeAdditionalData(basketDTO.additionalData);
+}
+/**
+ * Serializes information the current object
+ * @param BasketItemDTO The instance to serialize from.
+ * @param isSerializingDerivedType A boolean indicating whether the serialization is for a derived type.
+ * @param writer Serialization writer to use to serialize this model
+ */
+// @ts-ignore
+export function serializeBasketItemDTO(writer: SerializationWriter, basketItemDTO: Partial<BasketItemDTO> | undefined | null = {}, isSerializingDerivedType: boolean = false) : void {
+    if (!basketItemDTO || isSerializingDerivedType) { return; }
+    writer.writeObjectValue("id", basketItemDTO.id);
+    writer.writeObjectValue<ProductDTO>("product", basketItemDTO.product, serializeProductDTO);
+    writer.writeObjectValue("quantity", basketItemDTO.quantity);
+    writer.writeObjectValue("totalPrice", basketItemDTO.totalPrice);
+    writer.writeObjectValue("unitDiscount", basketItemDTO.unitDiscount);
+    writer.writeAdditionalData(basketItemDTO.additionalData);
 }
 /**
  * Serializes information the current object
