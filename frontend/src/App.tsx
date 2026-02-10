@@ -1,11 +1,12 @@
 import './App.css'
 import Items from './Items'
+import Basket from './Basket'
 import WeatherData from './WeatherData'
 import { Routes, Route } from 'react-router'
 
 function App() {
 
-    return (
+    return (    
         <div className="app-container">
             <header className="app-header">
                 <h1 className="app-title">Abysalto webshop</h1>
@@ -15,8 +16,9 @@ function App() {
             <main className="main-content">
                 <Routes>
                     <Route path="/" element={<Items />} />
+                    <Route path="/details" element={<Basket />} />
                     <Route path="/weather" element={<WeatherData />} />
-                </Routes>
+                </Routes>   
             </main>
 
             <footer className="app-footer">
